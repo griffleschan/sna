@@ -1,0 +1,82 @@
+<html>
+<head>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+</head>
+
+<!-- Insert CSS here -->
+
+<style type="text/css">
+
+   #mynetwork {
+       width: 100%;
+       height: 800px;
+       background-color: #ffffff;
+       border: 1px solid lightgray;
+       position: relative;
+       float: left;
+   }
+
+</style>
+
+
+<body>
+
+     <!-- Insert html code here -->
+
+     <label for="clusterData">Select Graph: </label>
+
+     <select name="clusterData" id="clusterData" onchange="loadIFrame()">
+       <option value="CRS">CRS</option>
+       <option value="CRS and GPA">CRS and GPA</option>
+       <option value="CRS and CCA">CRS and CCA</option>
+       <option value="CRS and GEP and GPA">CRS and GEP and GPA</option>
+       <option value="CRS and Intake and CCA">CRS and Intake and CCA</option>
+       <option value="CRS and PriSchIntakeCCA">CRS and PriSchIntakeCCA</option>
+     </select>
+
+     <!-- <button onclick="loadIFrame()">Refresh</button> -->
+
+     <div id ="placeholder"></div>
+
+     <!-- This is the container where the data is displayed -->
+     <div id = "mynetwork"></div>
+
+
+
+     <!-- Insert Javascript here -->
+
+     <script type="text/javascript">
+
+          function getOption() {
+             var selectElement = document.getElementById("clusterData");
+             var choice = selectElement.value;
+             // document.getElementById("placeholder").innerText = choice
+             return choice
+          }
+
+          function loadIFrame(){
+
+               var fileName = getOption()
+
+               var networkContainer = document.getElementById("mynetwork")
+
+               var className = "1A"
+
+               networkContainer.innerHTML = `<iframe src="${className} ${fileName}.html" title="${fileName}" width="100%" height="1200px"></iframe>`
+
+          }
+
+
+          // Loads Cluster CRS as default
+          loadIFrame()
+
+     </script> 
+
+</body>
+
+</html>

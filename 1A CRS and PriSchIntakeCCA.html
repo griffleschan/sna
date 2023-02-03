@@ -1,0 +1,80 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1><p style="color:black;font-size:14px;"><p style=text-align:left;><font size = 3>1A Year 1 Term 3 Class Relationship Survey + PriSch & Intake<br>1. Nodes are coloured by their Primary Schools.<br>2. Student A => Student B means that Student A has identified Student B as a friend.<br>3. Bidirectional arrow means they have mutually chosen each other.<br>4. Number in brackets and size of node indicate the number of classmates who have chosen this student as a friend (Popularity).<br>5. On mouseover, the Intake (Posted or DSA) & CCAs will be shown.</font></p></p></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 800px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#ffe02b", "id": "Std_1", "label": "Std_1 (3)", "shape": "dot", "size": 22, "title": "RIVERVALE PRIMARY SCHOOL, Intake:Posted, CCA:HOCKEY"}, {"color": "#ff64e7", "id": "Std_2", "label": "Std_2 (5)", "shape": "dot", "size": 30, "title": "ANGSANA PRIMARY SCHOOL, Intake:Posted, CCA:MILITARY BAND, MATHEMATICS CLUB"}, {"color": "#b22222", "id": "Std_17", "label": "Std_17 (5)", "shape": "dot", "size": 30, "title": "ST. ANDREW\u0027S JUNIOR SCHOOL, Intake:Posted, CCA:HOCKEY"}, {"color": "#975bff", "id": "Std_6", "label": "Std_6 (4)", "shape": "dot", "size": 26, "title": "CATHOLIC HIGH SCHOOL, Intake:Posted, CCA:RAFFLES 01 \u0026 02 SCOUTS"}, {"color": "#77f431", "id": "Std_5", "label": "Std_5 (3)", "shape": "dot", "size": 22, "title": "ENDEAVOUR PRIMARY SCHOOL, Intake:Posted, CCA:RAFFLES 01 \u0026 02 SCOUTS"}, {"color": "#01119c", "id": "Std_3", "label": "Std_3 (4)", "shape": "dot", "size": 26, "title": "ST. HILDA\u0027S PRIMARY SCHOOL, Intake:DSA, CCA:HOCKEY"}, {"color": "#ffa93f", "id": "Std_7", "label": "Std_7 (2)", "shape": "dot", "size": 18, "title": "TAO NAN SCHOOL, Intake:DSA, CCA:WATER POLO"}, {"color": "#a5009f", "id": "Std_4", "label": "Std_4 (2)", "shape": "dot", "size": 18, "title": "BUKIT TIMAH PRIMARY SCHOOL, Intake:DSA, CCA:CHINESE ORCHESTRA, HUMANITIES CLUB"}, {"color": "#43ffa5", "id": "Std_8", "label": "Std_8 (3)", "shape": "dot", "size": 22, "title": "JURONG WEST PRIMARY SCHOOL, Intake:DSA, CCA:HOCKEY"}, {"color": "#9b7f00", "id": "Std_32", "label": "Std_32 (4)", "shape": "dot", "size": 26, "title": "CANBERRA PRIMARY SCHOOL, Intake:Posted, CCA:MILITARY BAND, RAFFLES ARCHIVES AND MUSEUM"}, {"color": "#90ee90", "id": "Std_20", "label": "Std_20 (1)", "shape": "dot", "size": 14, "title": "AI TONG SCHOOL, Intake:Posted, CCA:CHINESE ORCHESTRA"}, {"color": "#fa8072", "id": "Std_14", "label": "Std_14 (3)", "shape": "dot", "size": 22, "title": "RIVER VALLEY PRIMARY SCHOOL, Intake:Posted, CCA:RUGBY"}, {"color": "#db7093", "id": "Std_21", "label": "Std_21 (3)", "shape": "dot", "size": 22, "title": "BOON LAY GARDEN PRIMARY SCHOOL, Intake:DSA, CCA:FLOORBALL"}, {"color": "#f60095", "id": "Std_19", "label": "Std_19 (2)", "shape": "dot", "size": 18, "title": "TEMASEK PRIMARY SCHOOL, Intake:DSA, CCA:RUGBY"}, {"color": "#b22222", "id": "Std_27", "label": "Std_27 (5)", "shape": "dot", "size": 30, "title": "ST. ANDREW\u0027S JUNIOR SCHOOL, Intake:DSA, CCA:HOCKEY"}, {"color": "#eb395d", "id": "Std_25", "label": "Std_25 (3)", "shape": "dot", "size": 22, "title": "Unknown/NA, Intake:DSA, CCA:WATER POLO"}, {"color": "#ff7f70", "id": "Std_9", "label": "Std_9 (3)", "shape": "dot", "size": 22, "title": "FUHUA PRIMARY SCHOOL, Intake:Posted, CCA:RAFFLES 01 \u0026 02 SCOUTS, JUDO"}, {"color": "#aecf00", "id": "Std_26", "label": "Std_26 (3)", "shape": "dot", "size": 22, "title": "MEE TOH SCHOOL, Intake:Posted, CCA:FLOORBALL"}, {"color": "#bdb76b", "id": "Std_12", "label": "Std_12 (4)", "shape": "dot", "size": 26, "title": "CEDAR PRIMARY SCHOOL, Intake:Posted, CCA:RAFFLES 01 \u0026 02 SCOUTS"}, {"color": "#76ffa5", "id": "Std_10", "label": "Std_10 (1)", "shape": "dot", "size": 14, "title": "HOLY INNOCENTS\u0027 PRIMARY SCHOOL, Intake:DSA, CCA:RAFFLES VOICES"}, {"color": "#da70d6", "id": "Std_24", "label": "Std_24 (4)", "shape": "dot", "size": 26, "title": "MARSILING PRIMARY SCHOOL, Intake:Posted, CCA:MILITARY BAND"}, {"color": "#975bff", "id": "Std_15", "label": "Std_15 (1)", "shape": "dot", "size": 14, "title": "CATHOLIC HIGH SCHOOL, Intake:Posted, CCA:RAFFLES VOICES"}, {"color": "#ff8c00", "id": "Std_11", "label": "Std_11 (0)", "shape": "dot", "size": 10, "title": "CHANGKAT PRIMARY SCHOOL, Intake:Posted, CCA:HOCKEY, PUBLICATIONS"}, {"color": "#a0ffa4", "id": "Std_13", "label": "Std_13 (3)", "shape": "dot", "size": 22, "title": "NAN CHIAU PRIMARY SCHOOL, Intake:Posted, CCA:RAFFLES 01 \u0026 02 SCOUTS"}, {"color": "#00b5c9", "id": "Std_18", "label": "Std_18 (6)", "shape": "dot", "size": 34, "title": "ST. JOSEPH\u0027S INSTITUTION JUNIOR, Intake:Posted, CCA:STRING ENSEMBLE"}, {"color": "#00ca5f", "id": "Std_30", "label": "Std_30 (4)", "shape": "dot", "size": 26, "title": "ANDERSON PRIMARY SCHOOL, Intake:Posted, CCA:FENCING"}, {"color": "#c1ff73", "id": "Std_29", "label": "Std_29 (4)", "shape": "dot", "size": 26, "title": "YU NENG PRIMARY SCHOOL, Intake:Posted, CCA:SOFTBALL, RAFFLES ARCHIVES AND MUSEUM"}, {"color": "#ffd700", "id": "Std_16", "label": "Std_16 (1)", "shape": "dot", "size": 14, "title": "PEI CHUN PUBLIC SCHOOL, Intake:Posted, CCA:FENCING"}, {"color": "#ffa93f", "id": "Std_31", "label": "Std_31 (3)", "shape": "dot", "size": 22, "title": "TAO NAN SCHOOL, Intake:Posted, CCA:CHINESE ORCHESTRA"}, {"color": "#5565ff", "id": "Std_33", "label": "Std_33 (3)", "shape": "dot", "size": 22, "title": "ROSYTH SCHOOL, Intake:DSA, CCA:CHINESE ORCHESTRA, PUBLICATIONS"}, {"color": "#43ffa5", "id": "Std_22", "label": "Std_22 (0)", "shape": "dot", "size": 10, "title": "JURONG WEST PRIMARY SCHOOL, Intake:DSA, CCA:HOCKEY"}, {"color": "#90ee90", "id": "Std_23", "label": "Std_23 (1)", "shape": "dot", "size": 14, "title": "AI TONG SCHOOL, Intake:Posted, CCA:TRACK AND FIELD"}, {"color": "#ff50c9", "id": "Std_28", "label": "Std_28 (0)", "shape": "dot", "size": 10, "title": "ELIAS PARK PRIMARY SCHOOL, Intake:Posted, CCA:RAFFLES 01 \u0026 02 SCOUTS, HUMANITIES CLUB"}]);
+        edges = new vis.DataSet([{"arrows": "to,from", "from": "Std_1", "to": "Std_2", "weight": 1}, {"arrows": "to", "from": "Std_1", "to": "Std_17", "weight": 1}, {"arrows": "to,from", "from": "Std_2", "to": "Std_6", "weight": 1}, {"arrows": "to,from", "from": "Std_2", "to": "Std_5", "weight": 1}, {"arrows": "to,from", "from": "Std_3", "to": "Std_7", "weight": 1}, {"arrows": "to,from", "from": "Std_3", "to": "Std_6", "weight": 1}, {"arrows": "to", "from": "Std_3", "to": "Std_2", "weight": 1}, {"arrows": "to", "from": "Std_7", "to": "Std_6", "weight": 1}, {"arrows": "to,from", "from": "Std_7", "to": "Std_4", "weight": 1}, {"arrows": "to", "from": "Std_4", "to": "Std_3", "weight": 1}, {"arrows": "to", "from": "Std_4", "to": "Std_8", "weight": 1}, {"arrows": "to", "from": "Std_5", "to": "Std_32", "weight": 1}, {"arrows": "to", "from": "Std_5", "to": "Std_20", "weight": 1}, {"arrows": "to", "from": "Std_6", "to": "Std_14", "weight": 1}, {"arrows": "to,from", "from": "Std_8", "to": "Std_21", "weight": 1}, {"arrows": "to,from", "from": "Std_8", "to": "Std_19", "weight": 1}, {"arrows": "to", "from": "Std_8", "to": "Std_27", "weight": 1}, {"arrows": "to,from", "from": "Std_21", "to": "Std_25", "weight": 1}, {"arrows": "to", "from": "Std_21", "to": "Std_19", "weight": 1}, {"arrows": "to,from", "from": "Std_9", "to": "Std_26", "weight": 1}, {"arrows": "to,from", "from": "Std_9", "to": "Std_12", "weight": 1}, {"arrows": "to,from", "from": "Std_9", "to": "Std_10", "weight": 1}, {"arrows": "to", "from": "Std_26", "to": "Std_12", "weight": 1}, {"arrows": "to,from", "from": "Std_26", "to": "Std_24", "weight": 1}, {"arrows": "to", "from": "Std_10", "to": "Std_5", "weight": 1}, {"arrows": "to", "from": "Std_10", "to": "Std_15", "weight": 1}, {"arrows": "to", "from": "Std_11", "to": "Std_17", "weight": 1}, {"arrows": "to", "from": "Std_11", "to": "Std_13", "weight": 1}, {"arrows": "to,from", "from": "Std_17", "to": "Std_18", "weight": 1}, {"arrows": "to,from", "from": "Std_17", "to": "Std_13", "weight": 1}, {"arrows": "to", "from": "Std_17", "to": "Std_24", "weight": 1}, {"arrows": "to", "from": "Std_12", "to": "Std_1", "weight": 1}, {"arrows": "to", "from": "Std_12", "to": "Std_30", "weight": 1}, {"arrows": "to", "from": "Std_13", "to": "Std_14", "weight": 1}, {"arrows": "to,from", "from": "Std_13", "to": "Std_18", "weight": 1}, {"arrows": "to", "from": "Std_14", "to": "Std_21", "weight": 1}, {"arrows": "to", "from": "Std_14", "to": "Std_12", "weight": 1}, {"arrows": "to,from", "from": "Std_14", "to": "Std_27", "weight": 1}, {"arrows": "to", "from": "Std_15", "to": "Std_29", "weight": 1}, {"arrows": "to", "from": "Std_15", "to": "Std_16", "weight": 1}, {"arrows": "to", "from": "Std_15", "to": "Std_6", "weight": 1}, {"arrows": "to,from", "from": "Std_29", "to": "Std_31", "weight": 1}, {"arrows": "to,from", "from": "Std_29", "to": "Std_30", "weight": 1}, {"arrows": "to,from", "from": "Std_29", "to": "Std_32", "weight": 1}, {"arrows": "to", "from": "Std_16", "to": "Std_30", "weight": 1}, {"arrows": "to", "from": "Std_16", "to": "Std_33", "weight": 1}, {"arrows": "to", "from": "Std_16", "to": "Std_25", "weight": 1}, {"arrows": "to,from", "from": "Std_30", "to": "Std_31", "weight": 1}, {"arrows": "to", "from": "Std_30", "to": "Std_32", "weight": 1}, {"arrows": "to,from", "from": "Std_18", "to": "Std_33", "weight": 1}, {"arrows": "to", "from": "Std_19", "to": "Std_27", "weight": 1}, {"arrows": "to", "from": "Std_19", "to": "Std_25", "weight": 1}, {"arrows": "to", "from": "Std_22", "to": "Std_12", "weight": 1}, {"arrows": "to", "from": "Std_22", "to": "Std_26", "weight": 1}, {"arrows": "to", "from": "Std_22", "to": "Std_27", "weight": 1}, {"arrows": "to,from", "from": "Std_23", "to": "Std_24", "weight": 1}, {"arrows": "to", "from": "Std_23", "to": "Std_17", "weight": 1}, {"arrows": "to", "from": "Std_23", "to": "Std_18", "weight": 1}, {"arrows": "to,from", "from": "Std_24", "to": "Std_33", "weight": 1}, {"arrows": "to", "from": "Std_25", "to": "Std_1", "weight": 1}, {"arrows": "to", "from": "Std_25", "to": "Std_2", "weight": 1}, {"arrows": "to", "from": "Std_27", "to": "Std_3", "weight": 1}, {"arrows": "to", "from": "Std_27", "to": "Std_18", "weight": 1}, {"arrows": "to", "from": "Std_28", "to": "Std_4", "weight": 1}, {"arrows": "to", "from": "Std_28", "to": "Std_5", "weight": 1}, {"arrows": "to", "from": "Std_28", "to": "Std_18", "weight": 1}, {"arrows": "to,from", "from": "Std_31", "to": "Std_32", "weight": 1}, {"arrows": "to", "from": "Std_33", "to": "Std_27", "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {"nodes": {"shadow": {"enabled": false}, "size": 10}, "physics": {"barnesHut": {"springLength": 300, "gravity": -80000, "avoidOverlay": 0.6}, "minVelocity": 0.2}};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

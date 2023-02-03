@@ -1,0 +1,80 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1><p style="color:black;font-size:14px;"><p style=text-align:left;><font size = 3>1A Year 1 Term 3 Class Relationship Survey + GPA<br>1. Nodes are coloured by GPA (red < 3, 3 <= orange < 3.2, 3.2 <= blue < 3.6, green otherwise).<br>2. Student A => Student B means that Student A has identified Student B as a friend.<br>3. Bidirectional arrow means they have mutually chosen each other.<br>4. Number in brackets and size of node indicate the number of classmates who have chosen this student as a friend (Popularity).<br>5. On mouseover, the GPA numeric value will be shown.</font></p></p></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 800px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "green", "id": "Std_1", "label": "Std_1 (3)", "shape": "dot", "size": 22, "title": "3.92"}, {"color": "green", "id": "Std_2", "label": "Std_2 (5)", "shape": "dot", "size": 30, "title": "3.6"}, {"color": "green", "id": "Std_17", "label": "Std_17 (5)", "shape": "dot", "size": 30, "title": "3.93"}, {"color": "green", "id": "Std_6", "label": "Std_6 (4)", "shape": "dot", "size": 26, "title": "3.67"}, {"color": "green", "id": "Std_5", "label": "Std_5 (3)", "shape": "dot", "size": 22, "title": "3.8"}, {"color": "blue", "id": "Std_3", "label": "Std_3 (4)", "shape": "dot", "size": 26, "title": "3.27"}, {"color": "orange", "id": "Std_7", "label": "Std_7 (2)", "shape": "dot", "size": 18, "title": "3.13"}, {"color": "green", "id": "Std_4", "label": "Std_4 (2)", "shape": "dot", "size": 18, "title": "3.87"}, {"color": "green", "id": "Std_8", "label": "Std_8 (3)", "shape": "dot", "size": 22, "title": "3.67"}, {"color": "green", "id": "Std_32", "label": "Std_32 (4)", "shape": "dot", "size": 26, "title": "3.6"}, {"color": "green", "id": "Std_20", "label": "Std_20 (1)", "shape": "dot", "size": 14, "title": "3.93"}, {"color": "blue", "id": "Std_14", "label": "Std_14 (3)", "shape": "dot", "size": 22, "title": "3.4"}, {"color": "blue", "id": "Std_21", "label": "Std_21 (3)", "shape": "dot", "size": 22, "title": "3.53"}, {"color": "green", "id": "Std_19", "label": "Std_19 (2)", "shape": "dot", "size": 18, "title": "3.6"}, {"color": "green", "id": "Std_27", "label": "Std_27 (5)", "shape": "dot", "size": 30, "title": "3.68"}, {"color": "orange", "id": "Std_25", "label": "Std_25 (3)", "shape": "dot", "size": 22, "title": "3.13"}, {"color": "green", "id": "Std_9", "label": "Std_9 (3)", "shape": "dot", "size": 22, "title": "3.8"}, {"color": "green", "id": "Std_26", "label": "Std_26 (3)", "shape": "dot", "size": 22, "title": "3.73"}, {"color": "green", "id": "Std_12", "label": "Std_12 (4)", "shape": "dot", "size": 26, "title": "3.67"}, {"color": "green", "id": "Std_10", "label": "Std_10 (1)", "shape": "dot", "size": 14, "title": "3.87"}, {"color": "green", "id": "Std_24", "label": "Std_24 (4)", "shape": "dot", "size": 26, "title": "3.6"}, {"color": "green", "id": "Std_15", "label": "Std_15 (1)", "shape": "dot", "size": 14, "title": "3.73"}, {"color": "green", "id": "Std_11", "label": "Std_11 (0)", "shape": "dot", "size": 10, "title": "3.84"}, {"color": "blue", "id": "Std_13", "label": "Std_13 (3)", "shape": "dot", "size": 22, "title": "3.47"}, {"color": "green", "id": "Std_18", "label": "Std_18 (6)", "shape": "dot", "size": 34, "title": "3.93"}, {"color": "orange", "id": "Std_30", "label": "Std_30 (4)", "shape": "dot", "size": 26, "title": "3.13"}, {"color": "green", "id": "Std_29", "label": "Std_29 (4)", "shape": "dot", "size": 26, "title": "3.8"}, {"color": "green", "id": "Std_16", "label": "Std_16 (1)", "shape": "dot", "size": 14, "title": "3.73"}, {"color": "blue", "id": "Std_31", "label": "Std_31 (3)", "shape": "dot", "size": 22, "title": "3.4"}, {"color": "orange", "id": "Std_33", "label": "Std_33 (3)", "shape": "dot", "size": 22, "title": "3.07"}, {"color": "blue", "id": "Std_22", "label": "Std_22 (0)", "shape": "dot", "size": 10, "title": "3.4"}, {"color": "green", "id": "Std_23", "label": "Std_23 (1)", "shape": "dot", "size": 14, "title": "3.67"}, {"color": "green", "id": "Std_28", "label": "Std_28 (0)", "shape": "dot", "size": 10, "title": "3.8"}]);
+        edges = new vis.DataSet([{"arrows": "to,from", "from": "Std_1", "to": "Std_2", "weight": 1}, {"arrows": "to", "from": "Std_1", "to": "Std_17", "weight": 1}, {"arrows": "to,from", "from": "Std_2", "to": "Std_6", "weight": 1}, {"arrows": "to,from", "from": "Std_2", "to": "Std_5", "weight": 1}, {"arrows": "to,from", "from": "Std_3", "to": "Std_7", "weight": 1}, {"arrows": "to,from", "from": "Std_3", "to": "Std_6", "weight": 1}, {"arrows": "to", "from": "Std_3", "to": "Std_2", "weight": 1}, {"arrows": "to", "from": "Std_7", "to": "Std_6", "weight": 1}, {"arrows": "to,from", "from": "Std_7", "to": "Std_4", "weight": 1}, {"arrows": "to", "from": "Std_4", "to": "Std_3", "weight": 1}, {"arrows": "to", "from": "Std_4", "to": "Std_8", "weight": 1}, {"arrows": "to", "from": "Std_5", "to": "Std_32", "weight": 1}, {"arrows": "to", "from": "Std_5", "to": "Std_20", "weight": 1}, {"arrows": "to", "from": "Std_6", "to": "Std_14", "weight": 1}, {"arrows": "to,from", "from": "Std_8", "to": "Std_21", "weight": 1}, {"arrows": "to,from", "from": "Std_8", "to": "Std_19", "weight": 1}, {"arrows": "to", "from": "Std_8", "to": "Std_27", "weight": 1}, {"arrows": "to,from", "from": "Std_21", "to": "Std_25", "weight": 1}, {"arrows": "to", "from": "Std_21", "to": "Std_19", "weight": 1}, {"arrows": "to,from", "from": "Std_9", "to": "Std_26", "weight": 1}, {"arrows": "to,from", "from": "Std_9", "to": "Std_12", "weight": 1}, {"arrows": "to,from", "from": "Std_9", "to": "Std_10", "weight": 1}, {"arrows": "to", "from": "Std_26", "to": "Std_12", "weight": 1}, {"arrows": "to,from", "from": "Std_26", "to": "Std_24", "weight": 1}, {"arrows": "to", "from": "Std_10", "to": "Std_5", "weight": 1}, {"arrows": "to", "from": "Std_10", "to": "Std_15", "weight": 1}, {"arrows": "to", "from": "Std_11", "to": "Std_17", "weight": 1}, {"arrows": "to", "from": "Std_11", "to": "Std_13", "weight": 1}, {"arrows": "to,from", "from": "Std_17", "to": "Std_18", "weight": 1}, {"arrows": "to,from", "from": "Std_17", "to": "Std_13", "weight": 1}, {"arrows": "to", "from": "Std_17", "to": "Std_24", "weight": 1}, {"arrows": "to", "from": "Std_12", "to": "Std_1", "weight": 1}, {"arrows": "to", "from": "Std_12", "to": "Std_30", "weight": 1}, {"arrows": "to", "from": "Std_13", "to": "Std_14", "weight": 1}, {"arrows": "to,from", "from": "Std_13", "to": "Std_18", "weight": 1}, {"arrows": "to", "from": "Std_14", "to": "Std_21", "weight": 1}, {"arrows": "to", "from": "Std_14", "to": "Std_12", "weight": 1}, {"arrows": "to,from", "from": "Std_14", "to": "Std_27", "weight": 1}, {"arrows": "to", "from": "Std_15", "to": "Std_29", "weight": 1}, {"arrows": "to", "from": "Std_15", "to": "Std_16", "weight": 1}, {"arrows": "to", "from": "Std_15", "to": "Std_6", "weight": 1}, {"arrows": "to,from", "from": "Std_29", "to": "Std_31", "weight": 1}, {"arrows": "to,from", "from": "Std_29", "to": "Std_30", "weight": 1}, {"arrows": "to,from", "from": "Std_29", "to": "Std_32", "weight": 1}, {"arrows": "to", "from": "Std_16", "to": "Std_30", "weight": 1}, {"arrows": "to", "from": "Std_16", "to": "Std_33", "weight": 1}, {"arrows": "to", "from": "Std_16", "to": "Std_25", "weight": 1}, {"arrows": "to,from", "from": "Std_30", "to": "Std_31", "weight": 1}, {"arrows": "to", "from": "Std_30", "to": "Std_32", "weight": 1}, {"arrows": "to,from", "from": "Std_18", "to": "Std_33", "weight": 1}, {"arrows": "to", "from": "Std_19", "to": "Std_27", "weight": 1}, {"arrows": "to", "from": "Std_19", "to": "Std_25", "weight": 1}, {"arrows": "to", "from": "Std_22", "to": "Std_12", "weight": 1}, {"arrows": "to", "from": "Std_22", "to": "Std_26", "weight": 1}, {"arrows": "to", "from": "Std_22", "to": "Std_27", "weight": 1}, {"arrows": "to,from", "from": "Std_23", "to": "Std_24", "weight": 1}, {"arrows": "to", "from": "Std_23", "to": "Std_17", "weight": 1}, {"arrows": "to", "from": "Std_23", "to": "Std_18", "weight": 1}, {"arrows": "to,from", "from": "Std_24", "to": "Std_33", "weight": 1}, {"arrows": "to", "from": "Std_25", "to": "Std_1", "weight": 1}, {"arrows": "to", "from": "Std_25", "to": "Std_2", "weight": 1}, {"arrows": "to", "from": "Std_27", "to": "Std_3", "weight": 1}, {"arrows": "to", "from": "Std_27", "to": "Std_18", "weight": 1}, {"arrows": "to", "from": "Std_28", "to": "Std_4", "weight": 1}, {"arrows": "to", "from": "Std_28", "to": "Std_5", "weight": 1}, {"arrows": "to", "from": "Std_28", "to": "Std_18", "weight": 1}, {"arrows": "to,from", "from": "Std_31", "to": "Std_32", "weight": 1}, {"arrows": "to", "from": "Std_33", "to": "Std_27", "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {"nodes": {"shadow": {"enabled": false}, "size": 10}, "physics": {"barnesHut": {"springLength": 300, "gravity": -80000, "avoidOverlay": 0.6}, "minVelocity": 0.2}};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
